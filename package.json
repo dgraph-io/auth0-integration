@@ -1,0 +1,46 @@
+{
+  "name": "todo-tutorial",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@apollo/client": "^3.1.3",
+    "@auth0/auth0-react": "^1.0.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "graphql": "^15.3.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "deploy-slash": "node deploy/SlashGraphQL/deploy.js",
+    "deploy-auth0": "node deploy/Auth0/deploy.js"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "readline-sync": "^1.4.10",
+    "graphql-request": "^3.0.0",
+    "auth0": "^2.27.1",
+    "jwks-rsa": "^1.9.0"
+  }
+}

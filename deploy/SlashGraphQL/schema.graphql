@@ -1,0 +1,29 @@
+type User @auth(
+    # Auth rules can be GraphQL rules that link claims in the JWT token to
+    # values in the data graph.  See file must-be-this-user.graphql for an example
+    # that says users can only query their own data and are only able to update
+    # their own user data.
+    query: { rule: must-be-this-user },
+    update: { rule: must-be-this-user },
+
+    # Auth rules can also be dependent on values in the claims regarless of 
+    # data in the graph.  These rule state that the "AddUser" claim is
+    # required to add a new user (added in the Auth0 post-user-registration hook)
+    # and the "Admin" claim is required to delete a user.
+    add: { rule: "{$role: {eq: \"AddUser\"}}" },
+    delete: { rule: "{$role: {eq: \"Admin\"}}" }
+) {
+    username: String! @id
+    displayname: String!
+
+    # Add scalar fields for other properties of the user.
+    # e.g.
+    # joinDate: DateTime
+
+    # Add fields linking to the user's data
+    # e.g.
+    # myTasks: Task
+}
+
+# Add types for the other data in your app
+# type Task { ... }
