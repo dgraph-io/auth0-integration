@@ -1,6 +1,6 @@
 type User @auth(
     # Auth rules can be GraphQL rules that link claims in the JWT token to
-    # values in the data graph.  See file must-be-this-user.graphql for an example
+    # values in the data graph.  See the rule's .graphql file for an example
     # that says users can only query their own data and are only able to update
     # their own user data.
     query: { rule: must-be-this-user },

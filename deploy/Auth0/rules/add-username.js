@@ -1,5 +1,5 @@
 function addUsername(user, context, callback) {
-  const namespace = "https://myapp.io/claims"
+  const namespace = "<<app-claims-namespace>>"
   context.idToken[namespace] = {
     username: user.email,
   }

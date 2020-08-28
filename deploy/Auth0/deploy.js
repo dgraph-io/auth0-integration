@@ -43,7 +43,7 @@ function addOrUpdateM2MHook(m2mConfig) {
   )
   add_user_hook = add_user_hook.replace(
     /<<your-M2M-hook>>/g,
-    "https://" + m2mConfig.tenant + ".auth0.com/oauth/token"
+    "https://" + m2mConfig.domain + "/oauth/token"
   )
   add_user_hook = add_user_hook.replace(
     /<<your-client-id>>/g,
@@ -55,7 +55,7 @@ function addOrUpdateM2MHook(m2mConfig) {
   )
   add_user_hook = add_user_hook.replace(
     /<<your-M2M-audience>>/g,
-    "https://" + m2mConfig.tenant + ".auth0.com/api/v2/"
+    "https://" + m2mConfig.domain + "/api/v2/"
   )
   add_user_hook = add_user_hook.replace(
     /<<your-Slash-GraphQL-URL>>/g,
@@ -95,7 +95,7 @@ function addOrUpdateRule(management, ruleData, stage) {
           console.log(err)
           process.exit(1)
         }
-        console.log("added rule " + hookData.name)
+        console.log("added rule " + ruleData.name)
       })
     }
   })
@@ -113,6 +113,10 @@ var authorize_add_hook = readFileSync(
   dir + "/hooks/" + "authorize-add-user-to-slash-graphql.js",
   "utf8"
 )
+authorize_add_hook = authorize_add_hook.replace(
+  /<<app-claims-namespace>>/g,
+  config.AUTH0_CUSTOM_CLAIMS
+)
 var authorize_add_hook_data = {
   name: "authorize-add-user-to-slash-graphql",
   script: authorize_add_hook,
@@ -123,6 +127,10 @@ addOrUpdateHook(management, authorize_add_hook_data, "credentials-exchange")
 var add_username_rule = readFileSync(
   dir + "/rules/" + "add-username.js",
   "utf8"
+)
+add_username_rule = add_username_rule.replace(
+  /<<app-claims-namespace>>/g,
+  config.AUTH0_CUSTOM_CLAIMS
 )
 var add_username_rule_data = {
   name: "add-username",
@@ -139,11 +147,11 @@ management.getClients(function (err, clients) {
   }
   const m2m = clients.find((c) => c.name == "Authorize M2M for Slash GraphQL")
 
-  if(m2m) {
+  if (m2m) {
     addOrUpdateM2MHook({
       clientID: m2m.client_id,
       clientSecret: m2m.client_secret,
-      tenant: m2m.tenant
+      domain: config.AUTH0_DOMAIN,
     })
   } else {
     var m2mClient = JSON.parse(
@@ -162,7 +170,7 @@ management.getClients(function (err, clients) {
       addOrUpdateM2MHook({
         clientID: createdM2MClient.client_id,
         clientSecret: createdM2MClient.client_secret,
-        tenant: createdM2MClient.tenant
+        domain: config.AUTH0_DOMAIN,
       })
 
       const grantData = {
@@ -181,21 +189,22 @@ management.getClients(function (err, clients) {
         )
       })
     })
-  } 
+  }
 
-  const spa = clients.find((c) => c.name == "Todo")
+  const spa = clients.find((c) => c.name == config.AUTH0_APP)
   if (!spa) {
     var spaData = JSON.parse(
-      readFileSync(dir + "/clients/" + "Todo.json", "utf8")
+      readFileSync(dir + "/clients/" + "MyApp.json", "utf8")
     )
+    spaData.name = config.AUTH0_APP
     management.createClient(spaData, function (err) {
       if (err) {
         console.log(err)
         process.exit(1)
       }
-      console.log('created application "Todo"')
+      console.log('created application ' + config.AUTH0_APP)
     })
   } else {
-    console.log('application "Todo" already exists')
+    console.log('application ' + config.AUTH0_APP + ' already exists')
   }
 })

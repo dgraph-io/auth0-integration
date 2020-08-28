@@ -28,7 +28,7 @@
 module.exports = function (client, scope, audience, context, cb) {
   var access_token = {}
   access_token.scope = scope
-  access_token["https://myapp.io/claims"] = { role: "AddUser" }
+  access_token["<<app-claims-namespace>>"] = { role: "AddUser" }
 
   cb(null, access_token)
 }

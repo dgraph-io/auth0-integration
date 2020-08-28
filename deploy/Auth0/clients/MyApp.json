@@ -7,10 +7,10 @@
   "cross_origin_auth": false,
   "allowed_clients": [],
   "allowed_logout_urls": [
-    "https://localhost:3000"
+    "http://localhost:3000"
   ],
   "callbacks": [
-    "https://localhost:3000"
+    "http://localhost:3000"
   ],
   "native_social_login": {
     "apple": {

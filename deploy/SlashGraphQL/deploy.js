@@ -35,25 +35,28 @@ async function createSchema() {
     const client = jwksClient({
       jwksUri: authConfig.jwksClient.jwksUri,
     })
-    authConfig.Dgraph_Authorization.VerificationKey = (await client.getSigningKeyAsync(
-      authConfig.jwksClient.kid
-    )).getPublicKey()
+    authConfig.Dgraph_Authorization.VerificationKey = (
+      await client.getSigningKeyAsync(authConfig.jwksClient.kid)
+    ).getPublicKey()
   } else {
     console.log("Unable to find keys in auth config")
     process.exit(1)
   }
 
-  return (
+  schema =
     schema +
     "\n\n# Dgraph.Authorization " +
     JSON.stringify(authConfig.Dgraph_Authorization)
-  )
+
+  // console.log(schema)
+
+  return schema
 }
 
 async function installSchema() {
   const gqlSchema = await createSchema()
 
-  var slashToken = readlineSync.question("Slash GraphQL access token : ", {
+  var slashToken = readlineSync.question("Slash GraphQL API Key : ", {
     hideEchoBack: true,
   })
 

@@ -11,26 +11,10 @@ const GET_USER = gql`
   }
 `
 
-function App() {
-  const {
-    auth0IsLoading,
-    auth0Error,
-    isAuthenticated,
-    loginWithRedirect,
-    logout,
-    user,
-  } = useAuth0()
-
+function HelloUser(props) {
   const { loading, error, data } = useQuery(GET_USER, {
-    variables: { username: user.email ? user.email : "no user" },
+    variables: { username: props.username },
   })
-
-  if (auth0IsLoading) {
-    return <p>Auth0 is starting</p>
-  }
-  if (auth0Error) {
-    return <p>Oops, Auth0 couldn't start: {error.message}</p>
-  }
 
   if (loading) {
     return <p>Loading</p>
@@ -41,22 +25,44 @@ function App() {
 
   return (
     <div>
+      Hi {data.getUser.displayname}, you can
+      <button
+        onClick={() => {
+          props.logout({ returnTo: window.location.origin })
+        }}
+      >
+        Log out
+      </button>{" "}
+      once you are finished.
+    </div>
+  )
+}
+
+function App() {
+  const {
+    auth0IsLoading,
+    auth0Error,
+    isAuthenticated,
+    loginWithRedirect,
+    logout,
+    user,
+  } = useAuth0()
+
+  if (auth0IsLoading) {
+    return <p>Auth0 is starting</p>
+  }
+  if (auth0Error) {
+    return <p>Oops, Auth0 couldn't start: {auth0Error}</p>
+  }
+
+  return (
+    <div>
       {!isAuthenticated ? (
         <p>
           <button onClick={loginWithRedirect}>Log in</button> to say hi.
         </p>
       ) : (
-        <p>
-          Hi {data.displayname}, you can
-          <button
-            onClick={() => {
-              logout({ returnTo: window.location.origin })
-            }}
-          >
-            Log out
-          </button>{" "}
-          once you are finished.
-        </p>
+        <HelloUser username={user.name} logout={logout} />
       )}
     </div>
   )
