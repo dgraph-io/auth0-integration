@@ -1,4 +1,4 @@
-Slash GraphQL + Auth0 gives you a serverless GraphQL app building stack that includes authentication through [Auth0](https://auth0.com/) and authorized data access through [here](https://dgraph.io/slash-graphql).  Combined with, for example, app deployments on [Netlify](https://www.netlify.com/), it's a serverless app stack that can scale from MVP to large apps that need global deployments and a distributed database backend.
+Slash GraphQL + Auth0 gives you a serverless GraphQL app building stack that includes identity management through [Auth0](https://auth0.com/) and authorized data access through [Slash GraphQL](https://dgraph.io/slash-graphql).  Combined with, for example, app deployments on [Netlify](https://www.netlify.com/), it's a serverless app stack that can scale from MVP to large apps that need global deployments and a distributed database backend.
 
 # Auth0 + Slash GraphQL integration quick start
 
@@ -10,7 +10,7 @@ It contains:
 * Auth0 setup 
 * Slash GraphQL setup
 
-For a walk-through of how to build apps in the Auth0+Slash GraphQL+Netlify stack, check out [this blog post](FIXME to come), the integration guides at [Auth0](FIXME to come) and [Slash GraphQL](https://dgraph.io/docs/slash-graphql/auth0-integration/), or a tutorial in the Dgraph GraphQL [docs](https://dgraph.io/docs/graphql/overview/).
+For a walk-through of how to build apps in the Auth0+Slash GraphQL+Netlify stack, check out [this blog post](FIXME to come), the integration guides at [Auth0](FIXME to come) or in the Slash GraphQL [docs](https://dgraph.io/docs/slash-graphql/auth0-integration/), or a tutorial in the Dgraph GraphQL [docs](https://dgraph.io/docs/graphql/overview/).
 
 # Using the quick start
 
@@ -21,15 +21,16 @@ To use this quick start you'll need:
 
 This quick start automates some setup (e.g. Auth0 settings) that would otherwise require point and click in the web interface.  There's a minimal amount of setup that just needs to be done before the automation can take over.
 
-To run the quick start, you'll need to clone this repository and work from that directory.
+To run the quick start, you'll need to clone this repository and work from cloned directory.
 
 ```sh
 git clone https://github.com/dgraph-io/auth0-integration
+cd auth0-integration
 ```
 
 ## Step 1 - Setup an Auth0 tenant
 
-Once you have signed up for [Auth0](https://auth0.com/), login and navigate the "APIs" tab - you'll need to create a token that allows automating Auth0 setup through its management API.   Select the "Auth0 Management API" and then press the "CREATE & AUTHORIZE TEST APPLICATION" button.
+Once you have signed up for [Auth0](https://auth0.com/), logged in, and created a new tenant (or use the default tenant), you'll need to create a token that allows automating Auth0 setup through its management API.  Navigate the "APIs" tab, select the "Auth0 Management API", and then press the "CREATE & AUTHORIZE TEST APPLICATION" button.
 
 ![Auth0 Management API](./auth0-management-api.png)
 
@@ -49,7 +50,7 @@ Using the values for that application, create a file `deploy/Auth0/config.json` 
 }
 ```
 
-There's a `.gitignore` file that ignores that config, so you don't check your API secrets into GitHub.
+There's a `.gitignore` file that ignores that config, making sure you don't check your API secrets into GitHub.
 
 Then, head over to your "Tenant Settings" and select the "Signing Keys" tab.
 
@@ -95,13 +96,13 @@ Then navigate to the "Settings" tab and click the "Add API Key" button to create
 
 ![Slash GraphQL API key](./slash-api-key.png)
 
-The `deploy/SlashGraphQL/auth.json` now has enough information to link Slash GraphQL and Auth0, so add a GraphQL schema for the app with the following command and enter the Slash GraphQL API key when prompted.
+The `deploy/SlashGraphQL/auth.json` file now has enough information to link Slash GraphQL and Auth0, so add a GraphQL schema for the app with the following command and enter the Slash GraphQL API key when prompted.
 
 ```sh
 yarn run deploy-slash
 ```
 
-That'll ask you for the Slash GraphQL API key you created above, and sets the minimal schema in `deploy/SlashGraphQL/schema.graphql` as the schema for the GraphQL backend you deployed.
+That sets the minimal schema in `deploy/SlashGraphQL/schema.graphql` as the schema for the GraphQL backend you deployed.
 
 ## Step 3 - App setup
 
@@ -126,7 +127,7 @@ Now you've deployed a Slash GraphQL backend and Auth0 app for secure access.  Yo
 yarn start
 ```
 
-There's not much to do in the app at this point, but you have a working Slash GraphQL and Auth0 setup running, so start working on your schema in `deploy/SlashGraphQL/schema.graphql` and build a GraphQL app.
+There's not much to do in the app at this point, but you have a working Slash GraphQL and Auth0 setup running, so start working on your schema in `deploy/SlashGraphQL/schema.graphql` and build a serverless GraphQL app.
 
 # Learn more
 
