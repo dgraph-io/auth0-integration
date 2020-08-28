@@ -129,6 +129,8 @@ yarn start
 
 There's not much to do in the app at this point, but you have a working Slash GraphQL and Auth0 setup running, so start working on your schema in `deploy/SlashGraphQL/schema.graphql` and build a serverless GraphQL app.
 
+The app works with username+password signup, not social sign in.  If the app allows social sign in, or needs to enrich the claims in the JWT with data from Slash GraphQL, then further rules and hooks are needed for those flows. 
+
 # Learn more
 
 * Read a tutorial on building apps with Slash GraphQL in the Dgraph GraphQL [docs](https://dgraph.io/docs/graphql/overview/)
