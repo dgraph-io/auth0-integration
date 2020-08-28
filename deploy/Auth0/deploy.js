@@ -136,7 +136,6 @@ var add_username_rule_data = {
   name: "add-username",
   enabled: true,
   script: add_username_rule,
-  order: 1,
 }
 addOrUpdateRule(management, add_username_rule_data)
 
