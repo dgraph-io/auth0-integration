@@ -30,7 +30,7 @@ cd auth0-integration
 
 ## Step 1 - Setup an Auth0 tenant
 
-Once you have signed up for [Auth0](https://auth0.com/), logged in, and created a new tenant (or use the default tenant), you'll need to create a token that allows automating Auth0 setup through its management API.  Navigate the "APIs" tab, select the "Auth0 Management API", and then press the "CREATE & AUTHORIZE TEST APPLICATION" button.
+Once you have signed up for [Auth0](https://auth0.com/), logged in, and created a new tenant (or use the default tenant), you'll need to create a token that allows automating Auth0 setup through its management API.  Navigate the "APIs" tab, select the "Auth0 Management API", navigate to the "API Explorer" tab and then press the "CREATE & AUTHORIZE TEST APPLICATION" button.
 
 ![Auth0 Management API](./auth0-management-api.png)
 
