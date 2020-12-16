@@ -2,7 +2,13 @@ const { readFileSync, existsSync } = require("fs")
 const readlineSync = require("readline-sync")
 const { GraphQLClient, gql } = require("graphql-request")
 const jwksClient = require("jwks-rsa")
-require("dotenv").config()
+
+// NODE_ENV=production yarn run deploy-slash
+// or
+// yarn run --prod deploy-slash
+const env = process.env.NODE_ENV ? process.env.NODE_ENV : "development"
+require("dotenv").config({ path: ".env." + env })
+const authConfigFile = "auth." + env + ".json"
 
 const updateSchema = gql`
   mutation($schema: String!) {
@@ -16,15 +22,24 @@ const updateSchema = gql`
 
 async function createSchema() {
   var schema = readFileSync("deploy/SlashGraphQL/schema.graphql", "utf8")
-  var userRule = readFileSync(
-    "deploy/SlashGraphQL/must-be-this-user.graphql",
-    "utf8"
-  )
 
-  schema = schema.replace(/must-be-this-user/g, '"""' + userRule + '"""')
+  const regexp = /"<<([\w-]*)>>"/g
+
+  var i
+  var match
+  while((match = regexp.exec(schema)) !== null) {
+    const ruleName = match[1]
+    var rule = readFileSync(
+      "deploy/SlashGraphQL/" + ruleName + ".auth.graphql",
+      "utf8"
+    )
+
+    var re = new RegExp(`"<<` + ruleName + `>>"`, `g`)
+    schema = schema.replace(re, '"""' + rule + '"""')
+  }
 
   var authConfig = JSON.parse(
-    readFileSync("deploy/SlashGraphQL/auth.json", "utf8")
+    readFileSync("deploy/SlashGraphQL/" + authConfigFile, "utf8")
   )
 
   if (existsSync("deploy/SlashGraphQL/public.key")) {
@@ -59,6 +74,8 @@ async function installSchema() {
   var slashToken = readlineSync.question("Slash GraphQL API Key : ", {
     hideEchoBack: true,
   })
+
+  console.log("Deploying to : " + process.env.REACT_APP_SLASH_GRAPHQL_ENDPOINT)
 
   const client = new GraphQLClient(
     process.env.REACT_APP_SLASH_GRAPHQL_ENDPOINT + "/admin",
