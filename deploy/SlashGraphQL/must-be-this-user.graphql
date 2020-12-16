@@ -1,5 +1,0 @@
-query($username: String!) {
-  queryUser(filter: { username: { eq: $username } }) {
-    username
-  }
-}

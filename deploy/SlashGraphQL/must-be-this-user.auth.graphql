@@ -1,0 +1,5 @@
+query($userID: String!) {
+  queryUser(filter: { userID: { eq: $userID } }) {
+    userID
+  }
+}
