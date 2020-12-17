@@ -78,7 +78,7 @@ Once that has completed, Slash GraphQL needs to know the ID of the Auth0 applica
 
 After you have signed up for Slash GraphQL, [login](https://slash.dgraph.io/), navigate to the dashboard, or use the backend selector to create a new backend. 
 
-![Create Slash GraphQL backend](./create-backend.png)
+![Launch Slash GraphQL backend](./create-backend.png)
 
 Once the backend has been created:
 
