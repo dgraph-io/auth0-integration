@@ -76,15 +76,19 @@ Once that has completed, Slash GraphQL needs to know the ID of the Auth0 applica
 
 ## Step 2 - Deploy a Slash GraphQL backend
 
-After you have signed up for Slash GraphQL, [login](https://slash.dgraph.io/), navigate to the dashboard, or use the backend selector to create a new backend. 
+After you have signed up for Slash GraphQL, [login](https://slash.dgraph.io/), select **Launch new Backend** to create a new GraphQL backend. 
 
 ![Launch Slash GraphQL backend](./create-backend.png)
+
+Enter the details for your backend and click **Launch**.
+
+![Enter GraphQL backend details](./backend-details.png)
 
 Once the backend has been created:
 
 ![New GraphQL backend](./new-backend.png)
 
-record the "Backend Endpoint" URL (minus the `/graphql` suffix) and copy this into the `REACT_APP_SLASH_GRAPHQL_ENDPOINT` value in the `.env` file in this directory.  It should look something like:
+...record the "Backend Endpoint" URL (minus the `/graphql` suffix) and copy this into the `REACT_APP_SLASH_GRAPHQL_ENDPOINT` value in the `.env` file in this directory.  It should look something like:
 
 ```
 REACT_APP_SLASH_GRAPHQL_ENDPOINT=https://some.backend.dgraph.io
@@ -92,7 +96,7 @@ REACT_APP_SLASH_GRAPHQL_ENDPOINT=https://some.backend.dgraph.io
 
 with your actual backend URL.
 
-Then navigate to the "Settings" tab and click the "Add API Key" button to create a new API key.  Keep a record of this key, because it will be needed in a moment.
+Then navigate to the "Settings" tab, select "Security" and click the "Create New" button to create a new API key.  Keep a record of this key, because it will be needed in a moment.
 
 ![Slash GraphQL API key](./slash-api-key.png)
 
