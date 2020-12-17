@@ -1,9 +1,18 @@
+# A type can have auth rules that specify who can access what data depending
+# on claims in a signed JWT.
 type User @auth(
+    # If an operation (query, add, update, delete) doesn't have an auth rule,
+    # then no authorization applies.
+    #
+    # In this case, there's no 'query' rule, so anyone can query for users and
+    # their display names.  We could have constructed a rule like this:
+    # query : { or: [ { rule: must-be-this-user }, { rule: "{$role: {eq: \"Admin\"}}" }]}
+    # to say that users can only see their own data ... but we'd also need to 
+    # allow admin roles to be able to read and write users.
+
     # Auth rules can be GraphQL rules that link claims in the JWT token to
     # values in the data graph.  See the rule's auth.graphql file for an example
-    # that says users can only query their own data and are only able to update
-    # their own user data.
-    query: { rule: must-be-this-user },
+    # that says users can only update their own data.
     update: { rule: must-be-this-user },
 
     # Auth rules can also be dependent on values in the claims regardless of 
